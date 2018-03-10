@@ -3,6 +3,7 @@ package controller;
 import java.util.Date;
 import java.util.HashMap;
 
+import message.Message;
 import model.BadClub;
 import model.BadSession;
 
@@ -27,6 +28,10 @@ public class Controller {
 	//Only called when server is first created (maybe make a server)
 	public void init() {
 		
+	}
+	
+	public void processMessage(Message message) {
+		System.out.println("hello");
 	}
 	
 	//only called when a new session is created
