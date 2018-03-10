@@ -5,9 +5,14 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    String ID; //This can be anything that identifies the user
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
+
+
 }

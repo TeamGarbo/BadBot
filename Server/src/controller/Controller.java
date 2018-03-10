@@ -1,7 +1,10 @@
 package controller;
 
+import model.BadSession;
+
 public class Controller {
 
+	BadSession session;
 	
 	private Controller() {
 		
