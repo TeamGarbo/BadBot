@@ -3,9 +3,9 @@ package controller;
 import java.util.Date;
 import java.util.HashMap;
 
-import message.Message;
 import model.BadClub;
 import model.BadSession;
+import teamgarbo.github.com.badbotapp.message.Message;
 
 public class Controller {
 

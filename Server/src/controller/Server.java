@@ -21,6 +21,7 @@ public class Server {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(4444);
+            System.out.println(serverSocket.getInetAddress().toString());
 
             while(true) {
                 Socket client = serverSocket.accept();

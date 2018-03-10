@@ -1,4 +1,4 @@
-package message;
+package teamgarbo.github.com.badbotapp.message;
 
 import java.io.Serializable;
 

@@ -1,11 +1,12 @@
 package controller;
-import message.Message;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import teamgarbo.github.com.badbotapp.message.Message;
 public class ConnectionHandler implements Runnable {
     Socket socket;
     ObjectOutputStream outputStream;
