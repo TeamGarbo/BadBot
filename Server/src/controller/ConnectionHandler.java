@@ -24,7 +24,7 @@ public class ConnectionHandler implements Runnable {
         while(socket.isConnected()) {
             try {
                 Message message =(Message)inputStream.readObject();
-                Controller.getInstance().HANDLEMESSAGE(object);
+                Controller.getInstance().processMessage(message);
             }catch(ClassNotFoundException e){
                 e.printStackTrace();
             }catch(IOException e){
@@ -36,7 +36,7 @@ public class ConnectionHandler implements Runnable {
 
     public void sendMessage(Message message){
         try {
-            outputStream.writeObject(object);
+            outputStream.writeObject(message);
         }catch(IOException e){
             e.printStackTrace();
         }
