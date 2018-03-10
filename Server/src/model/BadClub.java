@@ -7,6 +7,7 @@ public class BadClub {
 	BadSession session; 
 	String clubID;
 	ArrayList<BadSession> pastSessions;
+	ArrayList<BadPlayer> players;
 	
 	public BadClub() {
 		

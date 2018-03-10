@@ -14,7 +14,7 @@ public class BadSession implements Serializable{
 	Date date;
 	
 	
-	
+	 
 	public BadSession(Date date) {
 		this.date = date;
 		players = new ArrayList<BadPlayer>();
