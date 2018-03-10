@@ -8,6 +8,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import tests.DatabaseHandler;
+import model.BadClub;
 import model.BadPlayer;
 import model.BadSession;
 
@@ -56,5 +57,15 @@ public class TestDatabaseHandler {
 //			assertTrue(expectedPlayers.get(i).getID().equals(currentPlayers.get(i).getID()));
 //			System.out.println(currentPlayers.get(i).getID());
 //		}
+	}
+	
+	@Test
+	public void testName() throws Exception {
+		ArrayList<BadPlayer> expectedPlayers = new ArrayList<>();
+		expectedPlayers.add(new BadPlayer("name1", "1"));
+		expectedPlayers.add(new BadPlayer("name2", "2"));
+		expectedPlayers.add(new BadPlayer("name3", "3"));
+		
+		BadClub expectedClub = new BadClub();
 	}
 }

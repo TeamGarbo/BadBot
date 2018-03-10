@@ -9,6 +9,19 @@ public class BadClub {
 	ArrayList<BadSession> pastSessions;
 	ArrayList<BadPlayer> players;
 	
+	public ArrayList<BadPlayer> getPlayers() {
+		return players;
+	}
+
+	public void addPlayer(BadPlayer player)
+	{
+		players.add(player);
+	}
+	
+	public void addPlayers(ArrayList<BadPlayer> players) {
+		this.players.addAll(players);
+	}
+
 	public BadClub() {
 		
 	}
