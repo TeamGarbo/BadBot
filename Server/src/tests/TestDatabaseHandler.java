@@ -77,9 +77,6 @@ public class TestDatabaseHandler {
 		BadClub currentClub = DatabaseHandler.getClubDatabase(expectedID);
 		
 		assertTrue(expectedClub.getClubID().equals(expectedID));
-		
-		
-		
-		
+				
 	}
 }
