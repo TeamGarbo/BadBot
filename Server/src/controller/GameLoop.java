@@ -19,7 +19,6 @@ public class GameLoop implements Runnable{
 				e.printStackTrace();
 			}
 			
-			
 		}
 	}
 }

@@ -58,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Cancel"
-                style="?android:attr/borderlessButtonStyle"/>
+                style="?android:attr/borderlessButtonStyle"
+                android:onClick="endActivity"/>
 
             <Button
                 android:id="@+id/button"
@@ -66,7 +67,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Submit"
-                style="?android:attr/borderlessButtonStyle"/>
+                style="?android:attr/borderlessButtonStyle"
+                android:onClick="submitNewUser"
+                />
         </LinearLayout>
     </FrameLayout>
 

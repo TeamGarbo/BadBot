@@ -52,6 +52,13 @@
             android:layout_height="wrap_content"
             android:onClick="buttonClick"
             android:text="Button" />
+
+        <Button
+            android:id="@+id/btn_new_user_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New User Test"
+            android:onClick="loadNewUser"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

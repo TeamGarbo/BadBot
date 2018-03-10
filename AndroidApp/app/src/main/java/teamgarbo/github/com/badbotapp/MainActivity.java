@@ -1,8 +1,9 @@
 package teamgarbo.github.com.badbotapp;
 
+
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import java.io.IOException;
@@ -15,22 +16,29 @@ import teamgarbo.github.com.badbotapp.message.BadMessage;
 public class MainActivity extends AppCompatActivity {
 
     String ID; //This can be anything that identifies the user
+    Socket socket;
+    ObjectOutputStream os;
+    boolean socketInitalised = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getActionBar().setTitle(R.string.app_name);
+        //getActionBar().setTitle(R.string.app_name);
+
+    }
+
+    public void initSocket() throws IOException {
+        String ip = "10.9.133.81";
+        InetAddress adr =  InetAddress.getByName(ip);
+
+        socket = new Socket(adr, 4444);
+        os = new ObjectOutputStream(socket.getOutputStream());
+        socketInitalised = true;
     }
 
 
     public void sendTestMessage() throws IOException {
-        String ip = "10.9.133.81";
-        InetAddress adr =  InetAddress.getByName(ip);
-
-        Socket socket = new Socket(adr, 4444);
-        ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
-
         // Send first message
         BadMessage test = new BadMessage("i", "l");
         os.writeObject(test);
@@ -42,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         {
             public void run() {
                 try {
+                    if(!socketInitalised) initSocket();
                     sendTestMessage();
                 } catch (IOException e) {
                     e.printStackTrace();
