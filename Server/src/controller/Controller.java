@@ -1,12 +1,14 @@
 package controller;
 
 import java.util.Date;
+import java.util.HashMap;
 
+import model.BadClub;
 import model.BadSession;
 
 public class Controller {
 
-	BadSession session; //this is the current session
+	HashMap<String, BadClub> clubs; //this is the current session
 	Server server;
 	
 	private Controller() {
@@ -28,14 +30,15 @@ public class Controller {
 	}
 	
 	//only called when a new session is created
-	public void  initSession(Date date) {
-		session = new BadSession(date);
+	public void  initSession(Date date, String clubID) {
+		
+		clubs.get(clubID).newSession(new BadSession(date));
 		
 		//add players
 	}
 	
-	public BadSession getSession() {
-		return this.session;
+	public BadClub getClub(String clubID) {
+		return clubs.get(clubID);
 	}
 	
 	public Server getServer() {
