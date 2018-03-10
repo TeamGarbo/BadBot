@@ -8,9 +8,18 @@ public class BadPlayer {
 	int draws;
 	BadMatch lastMatch;
 	String ID;
+	int elo; //this is the rank of the player
 	
 	public String getName() {
 		return name;
+	}
+	
+	public int getElo() {
+		return this.elo;
+	}
+	
+	public void setElo(int elo) {
+		this.elo = elo;
 	}
 	
 	public void setName(String name) {

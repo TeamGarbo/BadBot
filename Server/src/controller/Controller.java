@@ -22,7 +22,7 @@ public class Controller {
 		return instance;
 	}
 	
-	//Only called when server is first created
+	//Only called when server is first created (maybe make a server)
 	public void init() {
 		
 	}
