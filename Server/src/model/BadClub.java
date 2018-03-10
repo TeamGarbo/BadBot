@@ -1,16 +1,30 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BadClub {
+public class BadClub implements Serializable{
 
 	BadSession session; 
 	String clubID;
-	ArrayList<BadSession> pastSessions;
-	ArrayList<BadPlayer> players;
-	
-	public BadClub() {
+	ArrayList<BadSession> pastSessions = new ArrayList<>();
+	ArrayList<BadPlayer> players = new ArrayList<>();
 		
+	public ArrayList<BadPlayer> getPlayers() {
+		return players;
+	}
+
+	public void addPlayer(BadPlayer player)
+	{
+		players.add(player);
+	}
+	
+	public void addPlayers(ArrayList<BadPlayer> players) {
+		this.players.addAll(players);
+	}
+
+	public BadClub(String id) {
+		this.clubID = id;
 	}
 
 	public BadSession getSession() {

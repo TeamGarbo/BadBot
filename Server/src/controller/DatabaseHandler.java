@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import model.BadClub;
 import model.BadPlayer;
 import model.BadSession;
 
@@ -15,7 +16,8 @@ public class DatabaseHandler {
 
 	private static String PLAYER_DATABASE_PATH = "player_database.db";
 	private static String SESSION_DATABASE_PATH = "session_database.db";
-
+	private static String CLUBS_DATABASE_PATH = "";
+	
 	public static void savePlayerDatabase(ArrayList<BadPlayer> players) {
 
 		try {
@@ -29,24 +31,6 @@ public class DatabaseHandler {
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.err.println("Error saving player database file.");
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void saveSessionDatabase(ArrayList<BadSession> sessions) {
-
-		try {
-			FileOutputStream fout = new FileOutputStream(SESSION_DATABASE_PATH);
-			ObjectOutputStream oos = new ObjectOutputStream(fout);
-			oos.writeObject(sessions);
-			oos.close();
-			fout.close();
-		} catch (FileNotFoundException e) {
-			System.err.println("Session database file not found.");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("Error saving session database file.");
 			e.printStackTrace();
 		}
 
@@ -72,11 +56,67 @@ public class DatabaseHandler {
 
 	}
 
+	public static void saveSessionDatabase(ArrayList<BadSession> sessions) {
+
+		try {
+			FileOutputStream fout = new FileOutputStream(SESSION_DATABASE_PATH);
+			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			oos.writeObject(sessions);
+			oos.close();
+			fout.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("Session database file not found.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Error saving session database file.");
+			e.printStackTrace();
+		}
+
+	}
+
 	public static ArrayList<BadSession> getSessionDatabase() {
 
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SESSION_DATABASE_PATH));
 			return (ArrayList<BadSession>) ois.readObject();
+		} catch (FileNotFoundException e) {
+			System.err.println("Session database file not found.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Error writing database files.");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.err.println("Error reading specified class.");
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	public static void saveClubDatabase(BadClub club) {
+
+		try {
+			FileOutputStream fout = new FileOutputStream(CLUBS_DATABASE_PATH + "club_" +club.getClubID() + ".db");
+			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			oos.writeObject(club);
+			oos.close();
+			fout.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("Club database file not found.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Error saving club database file.");
+			e.printStackTrace();
+		}
+
+	}
+
+	public static BadClub getClubDatabase(String id) {
+
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CLUBS_DATABASE_PATH + "club_" + id + ".db"));
+			return (BadClub) ois.readObject();
 		} catch (FileNotFoundException e) {
 			System.err.println("Session database file not found.");
 			e.printStackTrace();
