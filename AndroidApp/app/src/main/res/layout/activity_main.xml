@@ -7,12 +7,38 @@
     tools:context="teamgarbo.github.com.badbotapp.MainActivity">
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Badminton!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.032" />
+
+    <Button
+        android:id="@+id/btn_ScanQR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan QR"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="54dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Court"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="307dp" />
+
+    <TextView
+        android:id="@+id/txt_Player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PlayerName"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="277dp" />
 
 </android.support.constraint.ConstraintLayout>
