@@ -1,6 +1,8 @@
 package model;
 
-public class BadPlayer {
+import java.io.Serializable;
+
+public class BadPlayer implements Serializable{
 
 	String name;
 	int wins = 0;

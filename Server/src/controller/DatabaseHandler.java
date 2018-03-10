@@ -13,15 +13,17 @@ import model.BadSession;
 
 public class DatabaseHandler {
 
-	public static String PLAYER_DATABASE_PATH = "player_database.db";
-	public static String SESSION_DATABASE_PATH = "session_database.db";
+	private static String PLAYER_DATABASE_PATH = "player_database.db";
+	private static String SESSION_DATABASE_PATH = "session_database.db";
 
 	public static void savePlayerDatabase(ArrayList<BadPlayer> players) {
-		
+
 		try {
 			FileOutputStream fout = new FileOutputStream(PLAYER_DATABASE_PATH);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(players);
+			oos.close();
+			fout.close();
 		} catch (FileNotFoundException e) {
 			System.err.println("Player database file not found.");
 			e.printStackTrace();
@@ -29,15 +31,17 @@ public class DatabaseHandler {
 			System.err.println("Error saving player database file.");
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public static void saveSessionDatabase(ArrayList<BadSession> sessions) {
-		
+
 		try {
 			FileOutputStream fout = new FileOutputStream(SESSION_DATABASE_PATH);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(sessions);
+			oos.close();
+			fout.close();
 		} catch (FileNotFoundException e) {
 			System.err.println("Session database file not found.");
 			e.printStackTrace();
@@ -45,11 +49,11 @@ public class DatabaseHandler {
 			System.err.println("Error saving session database file.");
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public static ArrayList<BadPlayer> getPlayerDatabase() {
-		
+
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(PLAYER_DATABASE_PATH));
 			return (ArrayList<BadPlayer>) ois.readObject();
@@ -64,12 +68,12 @@ public class DatabaseHandler {
 			e.printStackTrace();
 		}
 
-		return null;		
+		return null;
 
 	}
 
 	public static ArrayList<BadSession> getSessionDatabase() {
-		
+
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SESSION_DATABASE_PATH));
 			return (ArrayList<BadSession>) ois.readObject();
@@ -84,7 +88,7 @@ public class DatabaseHandler {
 			e.printStackTrace();
 		}
 
-		return null;		
+		return null;
 
 	}
 

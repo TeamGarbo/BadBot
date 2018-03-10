@@ -1,16 +1,19 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class BadSession {
+public class BadSession implements Serializable{
 
 	String sessID; 
 	ArrayList<BadPlayer> players;
 	ArrayList<BadMatch> pastMatches;
 	HashMap<Integer, BadMatch> currentMatches;
 	Date date;
+	
+	
 	
 	public BadSession(Date date) {
 		this.date = date;
@@ -22,6 +25,10 @@ public class BadSession {
 	public void addPlayer(BadPlayer player) {
 		players.add(player);
 	}
+	public void addPlayers(ArrayList<BadPlayer> players) {
+		players.addAll(players);
+	}
+	
 	
 	public void removePlayer(BadPlayer player) {
 		players.remove(player);
