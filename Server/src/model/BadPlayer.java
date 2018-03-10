@@ -3,12 +3,24 @@ package model;
 public class BadPlayer {
 
 	String name;
-	int wins;
-	int losses;
-	int draws;
-	BadMatch lastMatch;
+	int wins = 0;
+	int losses = 0;
+	int draws = 0;
+	BadMatch lastMatch = null;
 	String ID;
-	int elo; //this is the rank of the player
+	int elo = -1; //this is the rank of the player
+	
+	
+	
+	public BadPlayer(String name, String iD) {
+		this.name = name;
+		ID = iD;
+	}
+	public BadPlayer(String name, String iD, int elo) {
+		this.name = name;
+		ID = iD;
+		this.elo = elo;
+	}
 	
 	public String getName() {
 		return name;
