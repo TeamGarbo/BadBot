@@ -2,8 +2,8 @@ package teamgarbo.github.com.badbotapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -20,16 +20,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new Thread()
-        {
-            public void run() {
-                try {
-                    sendTestMessage();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
 
@@ -44,8 +34,18 @@ public class MainActivity extends AppCompatActivity {
         BadMessage test = new BadMessage("i", "l");
         os.writeObject(test);
         os.flush(); // Send off the data
+    }
 
-
-
+    public void buttonClick(View view){
+        new Thread()
+        {
+            public void run() {
+                try {
+                    sendTestMessage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }

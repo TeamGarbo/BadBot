@@ -28,11 +28,11 @@ public class ConnectionHandler implements Runnable {
             }catch(ClassNotFoundException e){
             	runningFine = false;
             	closeSocket();
-                e.printStackTrace();
+               // e.printStackTrace();
             }catch(IOException e){
             	runningFine = false;
             	closeSocket();
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
         //Receive data from client

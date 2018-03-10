@@ -50,7 +50,7 @@
             android:id="@+id/btn_sendTestMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="sendTestMessage"
+            android:onClick="buttonClick"
             android:text="Button" />
     </LinearLayout>
 
