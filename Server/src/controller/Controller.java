@@ -4,7 +4,8 @@ import model.BadSession;
 
 public class Controller {
 
-	BadSession session;
+	BadSession session; //this is the current session
+	Server server;
 	
 	private Controller() {
 		
