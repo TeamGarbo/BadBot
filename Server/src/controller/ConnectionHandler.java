@@ -1,11 +1,9 @@
 package controller;
 
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
 import teamgarbo.github.com.badbotapp.message.Message;
 public class ConnectionHandler implements Runnable {
     Socket socket;
@@ -22,19 +20,33 @@ public class ConnectionHandler implements Runnable {
     }
 
     public void run(){
-        while(socket.isConnected()) {
+    	boolean runningFine = true;
+        while(runningFine) {
             try {
                 Message message =(Message)inputStream.readObject();
                 Controller.getInstance().processMessage(message);
             }catch(ClassNotFoundException e){
+            	runningFine = false;
+            	closeSocket();
                 e.printStackTrace();
             }catch(IOException e){
+            	runningFine = false;
+            	closeSocket();
                 e.printStackTrace();
             }
         }
         //Receive data from client
     }
 
+    public void closeSocket() {
+    	try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     public void sendMessage(Message message){
         try {
             outputStream.writeObject(message);

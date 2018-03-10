@@ -12,16 +12,12 @@ public class Server {
 
     private ArrayList<Socket> connectedPlayers = new ArrayList();
 
-    public static void main(String[] args){
-        new Server();
-    }
-
     public Server(){
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()*2);
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(4444);
-            System.out.println(serverSocket.getInetAddress().toString());
+            System.out.println("Server: started!");
 
             while(true) {
                 Socket client = serverSocket.accept();

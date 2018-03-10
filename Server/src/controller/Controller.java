@@ -2,7 +2,6 @@ package controller;
 
 import java.util.Date;
 import java.util.HashMap;
-
 import model.BadClub;
 import model.BadSession;
 import teamgarbo.github.com.badbotapp.message.Message;
@@ -13,7 +12,8 @@ public class Controller {
 	Server server;
 	
 	private Controller() {
-		init();
+		clubs = new HashMap<String, BadClub>();
+		
 	}
 	
 	private static Controller instance;
@@ -27,9 +27,28 @@ public class Controller {
 	
 	//Only called when server is first created (maybe make a server)
 	public void init() {
+		initServer();
 		
+		for (String key : clubs.keySet()) {
+		    createGameLoop(clubs.get(key));
+		}
+
 	}
 	
+	public void initServer() {
+		new Thread()
+        {
+            public void run() {
+            	server = new Server();
+            }
+        }.start();
+	}
+	
+	private void createGameLoop(BadClub badClub) {
+		new GameLoop(badClub);
+		
+	}
+
 	public void processMessage(Message message) {
 		System.out.println("hello");
 	}
@@ -40,6 +59,12 @@ public class Controller {
 		clubs.get(clubID).newSession(new BadSession(date));
 		
 		//add players
+	}
+	
+	public void addClub(String id) {
+		BadClub club = new BadClub(id);
+		clubs.put(id, club);
+		
 	}
 	
 	public BadClub getClub(String clubID) {
