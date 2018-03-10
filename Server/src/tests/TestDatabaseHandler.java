@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import controller.DatabaseHandler;
+import tests.DatabaseHandler;
 import model.BadPlayer;
 import model.BadSession;
 
