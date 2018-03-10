@@ -1,14 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BadClub {
+public class BadClub implements Serializable{
 
 	BadSession session; 
 	String clubID;
-	ArrayList<BadSession> pastSessions;
-	ArrayList<BadPlayer> players;
-	
+	ArrayList<BadSession> pastSessions = new ArrayList<>();
+	ArrayList<BadPlayer> players = new ArrayList<>();
+		
 	public ArrayList<BadPlayer> getPlayers() {
 		return players;
 	}
@@ -22,8 +23,8 @@ public class BadClub {
 		this.players.addAll(players);
 	}
 
-	public BadClub() {
-		
+	public BadClub(String id) {
+		this.clubID = id;
 	}
 
 	public BadSession getSession() {

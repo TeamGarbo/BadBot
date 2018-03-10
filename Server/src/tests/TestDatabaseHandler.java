@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import tests.DatabaseHandler;
+import controller.DatabaseHandler;
 import model.BadClub;
 import model.BadPlayer;
 import model.BadSession;
@@ -60,12 +60,26 @@ public class TestDatabaseHandler {
 	}
 	
 	@Test
-	public void testName() throws Exception {
+	public void testClub() throws Exception {
 		ArrayList<BadPlayer> expectedPlayers = new ArrayList<>();
 		expectedPlayers.add(new BadPlayer("name1", "1"));
 		expectedPlayers.add(new BadPlayer("name2", "2"));
 		expectedPlayers.add(new BadPlayer("name3", "3"));
 		
-		BadClub expectedClub = new BadClub();
+		String expectedID = "1";
+		
+		BadClub expectedClub = new BadClub(expectedID);
+		
+		expectedClub.addPlayers(expectedPlayers);
+		
+		DatabaseHandler.saveClubDatabase(expectedClub);
+		
+		BadClub currentClub = DatabaseHandler.getClubDatabase(expectedID);
+		
+		assertTrue(expectedClub.getClubID().equals(expectedID));
+		
+		
+		
+		
 	}
 }
