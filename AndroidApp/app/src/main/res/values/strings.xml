@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BadBotApp</string>
+    <string name="new_user">New User Form</string>
 </resources>
