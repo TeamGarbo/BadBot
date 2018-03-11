@@ -13,6 +13,7 @@ public class Controller {
 	HashMap<String, BadClub> clubs; //this is the current session
 	private Server server;
 	HashMap<String, BadPlayer> allPlayers;
+	private int fixedCourtNumber = 1;
 	
 	private Controller() {
 		clubs = new HashMap<>();
@@ -84,7 +85,7 @@ public class Controller {
 				if(nextPlayers!=null) {
 					for (BadPlayer dude : nextPlayers) {
 						//TODO change court number
-						GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+						GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber++);
 						this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 					}
 				}
@@ -104,7 +105,7 @@ public class Controller {
 			if(nextPlayers!=null) {
 				for (BadPlayer dude : nextPlayers) {
 					//TODO change court number
-					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber++);
 					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 				}
 			}
@@ -130,7 +131,7 @@ public class Controller {
 			if(nextPlayers!=null) {
 				for (BadPlayer dude : nextPlayers) {
 					//TODO change court number
-					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber++);
 					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 				}
 			}
