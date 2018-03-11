@@ -1,7 +1,6 @@
 package controller;
 
 import controller.ConnectionHandler;
-import teamgarbo.github.com.badbotapp.message.BadMessage;
 import teamgarbo.github.com.badbotapp.message.InitialMessage;
 import teamgarbo.github.com.badbotapp.message.Message;
 

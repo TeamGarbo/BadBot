@@ -93,6 +93,14 @@ public class Controller {
 			default: player.incrementDraws(); //if its none then just increment the draws
 				break;
 			}
+			club.addToQueue(player);
+			
+			BadPlayer[] nextPlayers = club.getTeam(4);
+			for(BadPlayer dude: nextPlayers) {
+				//TODO change court number 
+				GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+				this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+			}
 		}
 	}
 	

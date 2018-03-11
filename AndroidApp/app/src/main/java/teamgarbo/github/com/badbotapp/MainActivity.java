@@ -135,7 +135,11 @@ public class MainActivity extends AppCompatActivity {
        // if(message instanceof BadMessage){
 
         //}
-
+        if(message instanceof GameStartMessage){
+            //TODO create intent with "i won/lost" buttons
+            //TODO set textview thing to court number
+            int court = ((GameStartMessage) message).getCourtNumber();
+        }
 
     }
 
