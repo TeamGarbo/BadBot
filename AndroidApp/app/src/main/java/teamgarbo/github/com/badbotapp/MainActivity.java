@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private IntentIntegrator qrScan;
 
     String playerID; //This can be anything that identifies the user
+    String playerName;
     String clubID;
     Socket socket;
     ObjectOutputStream os;
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity {
         //getActionBar().setTitle(R.string.app_name);
         startSocket();
         initPlayerID();
+        updatePlayerDetails("Not logged in");
         qrScan = new IntentIntegrator(this);
         //qrScan.initiateScan();
         FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
         fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
         enabled(false);
+        updateCourtDetails(0);
     }
 
     private void changeFBT()
@@ -72,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updatePlayerDetails()
+    private void updatePlayerDetails(final String name)
     {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 TextView name_text = findViewById(R.id.txt_Player);
-                name_text.setText(playerID);
+                name_text.setText(name);
             }
         });
 
@@ -172,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         playerID = tm.getDeviceId();
-        updatePlayerDetails();
     }
 
     public void sendTestMessage() throws IOException {
@@ -245,15 +247,17 @@ public class MainActivity extends AppCompatActivity {
             enabled(true);
         }
 
-        if(message instanceof StringMessage){
-            Toast.makeText(this,((StringMessage) message).getString(), Toast.LENGTH_SHORT);
-            playerID = ((StringMessage) message).getPlayerID();
-            updatePlayerDetails();
+        if(message instanceof ExistingPlayerMessage){
+            playerName = ((ExistingPlayerMessage) message).getName();
+            updatePlayerDetails(playerName);
         }
 
-        if(message instanceof StringMessage){
-            if(((StringMessage) message).getString().equals("Logout"))
-                logout();
+        if(message instanceof RequestPlayerMessage){
+            startActivityForResult(new Intent(getBaseContext(), NewUserFormActivity.class), 444);
+        }
+
+        if(message instanceof LogoutMessage){
+            logout();
         }
     }
 
@@ -278,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
             sendMessage(new LogoutMessage(clubID, playerID));
             loggedIn = false;
             changeFBT();
+            updatePlayerDetails("Not logged in");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -297,6 +302,20 @@ public class MainActivity extends AppCompatActivity {
     //Getting the scan results
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 444) {
+            if (resultCode == RESULT_OK) {
+                String player_name = data.getStringExtra("player_name");
+                String player_band = data.getStringExtra("player_band");
+
+                try {
+                    sendMessage(new CreatePlayerMessage(clubID,playerID, player_name, Integer.parseInt(player_band)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             //if qrcode is empty

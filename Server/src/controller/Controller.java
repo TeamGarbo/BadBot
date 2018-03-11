@@ -104,8 +104,8 @@ public class Controller {
 				this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 			}
 			
-			StringMessage strMsg = new StringMessage(message.getClubID(), message.getPlayerID(), "New Message received");
-			this.server.sendMessage(strMsg.getPlayerID(), strMsg);
+			ExistingPlayerMessage msg = new ExistingPlayerMessage(message.getClubID(), message.getPlayerID(), ((CreatePlayerMessage) message).getName());
+			this.server.sendMessage(msg.getPlayerID(), msg);
 		}
 		else if(message instanceof GameEndMessage) {
 			BadClub club = clubs.get(message.getClubID());

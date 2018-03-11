@@ -35,7 +35,7 @@ public class ConnectionHandler implements Runnable {
             }catch(IOException e){
             	runningFine = false;
             	closeSocket();
-                e.printStackTrace();
+            	System.out.println("Player logged out: by force close");
             }
         }
         //Receive data from client
