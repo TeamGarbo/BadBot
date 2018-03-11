@@ -1,17 +1,14 @@
 package teamgarbo.github.com.badbotapp.message;
 
-public class GameEndMessage extends Message{
+import model.Properties;
 
-	public enum RESULT{
-		WIN, DRAW, LOSE
-	}
+public class GameEndMessage extends Message{	
+	
+	public int result; 
 	
 	public GameEndMessage(String clubID, String playerID, int result) {
 		this.clubID = clubID;
 		this.playerID = playerID;
-		
-		switch(result) {
-		case RESULT.
-		}
+		this.result = result;
 	}
 }

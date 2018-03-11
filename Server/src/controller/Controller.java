@@ -5,6 +5,7 @@ import java.util.HashMap;
 import model.BadClub;
 import model.BadPlayer;
 import model.BadSession;
+import model.Properties;
 import teamgarbo.github.com.badbotapp.message.*;
 
 public class Controller {
@@ -66,7 +67,9 @@ public class Controller {
 			
 			BadPlayer getPlayer = allPlayers.get(message.getPlayerID());
 			if(getPlayer==null) {
+				//TODO Create player properly
 				BadPlayer myPlayer = new BadPlayer("Guest", message.getPlayerID());
+				myPlayer.setElo(1000);
 				allPlayers.put(myPlayer.getID(), myPlayer);
 				club.addPlayer(myPlayer);
 			}else{
@@ -75,6 +78,21 @@ public class Controller {
 			System.out.println(message.getClubID() + " " + message.getPlayerID());
 			
 			this.server.sendMessage(message.getPlayerID(), message);
+		}
+		else if(message instanceof GameEndMessage) {
+			BadClub club = clubs.get(message.getClubID());
+			BadPlayer player = allPlayers.get(message.getPlayerID());
+			
+			switch(((GameEndMessage) message).result) {
+			case Properties.WIN: player.incrementWins();
+				break;
+			case Properties.DRAW: player.incrementDraws();
+				break;
+			case Properties.LOSS: player.incrementLosses();
+				break;
+			default: player.incrementDraws(); //if its none then just increment the draws
+				break;
+			}
 		}
 	}
 	
