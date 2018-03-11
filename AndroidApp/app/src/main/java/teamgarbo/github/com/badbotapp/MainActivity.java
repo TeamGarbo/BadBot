@@ -16,13 +16,12 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import teamgarbo.github.com.badbotapp.message.BadMessage;
-import teamgarbo.github.com.badbotapp.message.InitialMessage;
-import teamgarbo.github.com.badbotapp.message.Message;
+import teamgarbo.github.com.badbotapp.message.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     String clubID;
     Socket socket;
     ObjectOutputStream os;
+    ObjectInputStream is;
     boolean socketInitalised = false;
 
     @Override
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         //getActionBar().setTitle(R.string.app_name);
         qrScan = new IntentIntegrator(this);
         initPlayerID();
+        startSocket();
     }
 
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         socket = new Socket(adr, 4444);
         os = new ObjectOutputStream(socket.getOutputStream());
+        is = new ObjectInputStream(socket.getInputStream());
         socketInitalised = true;
     }
 
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             initPlayerID();
             return;
         }
+
         playerID = tm.getDeviceId();
     }
 
@@ -72,6 +75,43 @@ public class MainActivity extends AppCompatActivity {
         Message test = new InitialMessage(clubID, playerID);
         os.writeObject(test);
         os.flush(); // Send off the data
+    }
+
+    public void startSocket(){
+        new Thread()
+        {
+            public void run() {
+                try {
+                    if(!socketInitalised) initSocket();
+                    listener();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public void listener(){
+        new Thread()
+        {
+            public void run() {
+                try {
+                    if(socketInitalised)
+                        while(true){
+                           Message message = (Message) is.readObject();
+                           processMessage(message);
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    //TODO: process message based on type
+    public void processMessage(Message message){
+        System.out.println(message.getClubID());
     }
 
     public void buttonClick(View view){
