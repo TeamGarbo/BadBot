@@ -94,6 +94,10 @@ public class BadClub implements Serializable{
 		return players;
 	}
 	
+	public void removeFromQueue(BadPlayer player) {
+		playerQueue.remove(player);
+	}
+	
 	public void addToQueue(BadPlayer player) {
 		playerQueue.add(player);
 	}

@@ -102,6 +102,13 @@ public class Controller {
 				this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 			}
 		}
+		else if(message instanceof LogoutMessage) {
+			BadClub club = clubs.get(message.getClubID());
+			BadPlayer player = allPlayers.get(message.getPlayerID());
+			
+			club.removeFromQueue(player);
+			this.server.closeSocket(player.getID());
+		}
 	}
 	
 	//only called when a new session is created
