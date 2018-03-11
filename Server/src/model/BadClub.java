@@ -15,7 +15,7 @@ public class BadClub implements Serializable{
 	public ArrayList<BadPlayer> getPlayers() {
 		return players;
 	}
-
+	
 	public int getLowestElo(){
 		int lowest = Integer.MAX_VALUE;
 		int highest = Integer.MIN_VALUE;
@@ -45,6 +45,7 @@ public class BadClub implements Serializable{
 	public void addPlayer(BadPlayer player)
 	{
 		players.add(player);
+		playerQueue.add(player);
 	}
 	
 	public void addPlayers(ArrayList<BadPlayer> players) {
@@ -82,8 +83,13 @@ public class BadClub implements Serializable{
 
 	public BadPlayer[] getTeam(int size){
 		BadPlayer[] players = new BadPlayer[size];
-		for(int i=0; i<players.length; i++) {
-			players[i] = playerQueue.pop();
+		if(playerQueue.size() >= size) {
+			for(int i=0; i<players.length; i++) {
+				players[i] = playerQueue.pop();
+			}
+		}
+		else {
+			return null;
 		}
 		return players;
 	}

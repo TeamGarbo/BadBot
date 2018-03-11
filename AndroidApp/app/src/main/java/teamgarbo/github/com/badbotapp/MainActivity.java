@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO: process message based on type
     public void processMessage(Message message){
-        System.out.println(message.getClubID());
+        System.out.println("Message bounceback: " + message.getClubID());
     }
 
     public void buttonClick(View view){

@@ -5,13 +5,12 @@ import java.util.HashMap;
 import model.BadClub;
 import model.BadPlayer;
 import model.BadSession;
-import teamgarbo.github.com.badbotapp.message.BadMessage;
-import teamgarbo.github.com.badbotapp.message.Message;
+import teamgarbo.github.com.badbotapp.message.*;
 
 public class Controller {
 
 	HashMap<String, BadClub> clubs; //this is the current session
-	Server server;
+	private Server server;
 	HashMap<String, BadPlayer> allPlayers;
 	
 	private Controller() {
@@ -42,7 +41,7 @@ public class Controller {
 		new Thread()
         {
             public void run() {
-            	server = new Server();
+            	Controller.getInstance().setServer(new Server());
             }
         }.start();
 	}
@@ -52,17 +51,28 @@ public class Controller {
 		
 	}
 
+	public void setServer(Server server) {
+		this.server = server;
+	}
 
 	///TODO: add player registration (name)
 	public void processMessage(Message message) {
-		if(message instanceof BadMessage) {
+		if(message instanceof InitialMessage) {
 			BadClub club = clubs.get(message.getClubID());
-			BadPlayer getPlayer = allPlayers.get(message.getPlayerID();
+			if(club==null) {
+				club = new BadClub(message.getClubID());
+				clubs.put(club.getClubID(), club);
+			}
+			
+			BadPlayer getPlayer = allPlayers.get(message.getPlayerID());
 			if(getPlayer==null) {
-				club.addPlayer(new BadPlayer(message.getPlayerID(), ));
+				club.addPlayer(new BadPlayer("Guest", message.getPlayerID()));
 			}else{
 				club.addPlayer(getPlayer);
 			}
+			System.out.println(message.getClubID() + " " + message.getPlayerID());
+			
+			this.server.sendMessage(message.getPlayerID(), message);
 		}
 		System.out.println("hello");
 	}

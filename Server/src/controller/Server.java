@@ -20,6 +20,15 @@ public class Server {
     private HashMap<String, ConnectionHandler> userID_connection = new HashMap<>();
 
     public Server(){
+    	new Thread()
+        {
+            public void run() {
+            	init();
+            }
+        }.start();
+    }
+    
+    public void init() {
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()*2);
         ServerSocket serverSocket = null;
         try {
@@ -35,15 +44,14 @@ public class Server {
         }catch(IOException e){
             e.printStackTrace();
         }
-
-
     }
+    
     public void passMessage(Message message, ConnectionHandler handler){
         if(message instanceof InitialMessage) {
-            userID_connection.put(message.getPlayerID(), handler);
-        }else{
-            Controller.getInstance().processMessage(message);
+            userID_connection.put(message.getPlayerID(), handler);    
         }
+        
+        Controller.getInstance().processMessage(message);
     }
 
     public void sendMessage(String userID, Message message){
