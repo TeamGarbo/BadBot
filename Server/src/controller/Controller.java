@@ -156,13 +156,16 @@ public class Controller {
 			BadClub club = clubs.get(message.getClubID());
 			BadPlayer player = allPlayers.get(message.getPlayerID());
 			
-			RequestLogout msg = new RequestLogout(club.getClubID(), player.getID());
-			this.server.sendMessage(msg.getPlayerID(), msg);
-			
 			System.out.println("Player logged out: " + message.getClubID() + " " + message.getPlayerID());
 			club.removeFromQueue(player);
 			//this.server.closeSocket(player.getID());
-			
+
+			RequestLogout msg = new RequestLogout(club.getClubID(), player.getID());
+			this.server.sendMessage(msg.getPlayerID(), msg);
+
+			if(!player.getCurrentMatch().hasEnded()){
+				club.freeCourt();
+			}
 		}
 	}
 	

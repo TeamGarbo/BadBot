@@ -18,6 +18,7 @@ public class Server {
     private ArrayList<Socket> connectedPlayers = new ArrayList<>();
 
     private HashMap<String, ConnectionHandler> userID_connection = new HashMap<>();
+    private HashMap<ConnectionHandler, String> connection_userID = new HashMap<>();
 
     public Server() {
         new Thread() {
@@ -48,6 +49,7 @@ public class Server {
     public void passMessage(Message message, ConnectionHandler handler) {
         if (message instanceof InitialMessage) {
             userID_connection.put(message.getPlayerID(), handler);
+            connection_userID.put(handler, message.getPlayerID());
         }
 
         Controller.getInstance().processMessage(message);
