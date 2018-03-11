@@ -24,24 +24,25 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/player_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                tools:text="Name" />
+                tools:text="Enter Player Name" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rating" />
+                android:text="Rating"
+                android:textSize="24sp"
+                android:layout_marginTop="20dp"/>
 
-            <SeekBar
-                android:id="@+id/seekBar"
+            <Spinner
+                android:id="@+id/color_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="00" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -53,23 +54,24 @@
             >
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btn_cancel"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="endActivity"
                 android:text="Cancel"
-                style="?android:attr/borderlessButtonStyle"
-                android:onClick="endActivity"/>
+                android:textColor="@color/colorRed"/>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_submit"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Submit"
-                style="?android:attr/borderlessButtonStyle"
                 android:onClick="submitNewUser"
-                />
+                android:text="Submit"
+                android:textColor="@color/colorGreen" />
         </LinearLayout>
     </FrameLayout>
 
