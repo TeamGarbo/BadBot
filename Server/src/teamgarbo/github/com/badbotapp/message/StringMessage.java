@@ -8,5 +8,9 @@ public class StringMessage extends Message {
 		super(clubID, playerID);
 		this.string = string;
 	}
+	
+	public String getString() {
+		return string;
+	}
 
 }

@@ -68,16 +68,20 @@ public class Controller {
 			BadPlayer getPlayer = allPlayers.get(message.getPlayerID());
 			if(getPlayer==null) {
 				//TODO Create player properly
+				RequestPlayerMessage msg = new RequestPlayerMessage(message.getClubID(), message.getPlayerID());
+				this.server.sendMessage(msg.getPlayerID(), msg);
+/*				
 				BadPlayer myPlayer = new BadPlayer("Guest", message.getPlayerID());
 				myPlayer.setElo(1000);
 				allPlayers.put(myPlayer.getID(), myPlayer);
-				club.addPlayer(myPlayer);
+				club.addPlayer(myPlayer);*/
 			}else{
 				club.addPlayer(getPlayer);
 			}
 			System.out.println("Player Created: " + message.getClubID() + " " + message.getPlayerID());
 			
-			this.server.sendMessage(message.getPlayerID(), message);
+			StringMessage strMsg = new StringMessage(message.getClubID(), message.getPlayerID(), "Initial message received");
+			this.server.sendMessage(strMsg.getPlayerID(), strMsg);
 		}
 		else if(message instanceof GameEndMessage) {
 			BadClub club = clubs.get(message.getClubID());
@@ -103,14 +107,20 @@ public class Controller {
 			}
 			
 			System.out.println("Player ended game: " + message.getClubID() + " " + message.getPlayerID());
+			StringMessage strMsg = new StringMessage(club.getClubID(), player.getID(), "Game End received");
+			this.server.sendMessage(strMsg.getPlayerID(), strMsg);
 		}
 		else if(message instanceof LogoutMessage) {
 			BadClub club = clubs.get(message.getClubID());
 			BadPlayer player = allPlayers.get(message.getPlayerID());
 			
-			club.removeFromQueue(player);
-			this.server.closeSocket(player.getID());
+			StringMessage strMsg = new StringMessage(club.getClubID(), player.getID(), "Logout");
+			this.server.sendMessage(strMsg.getPlayerID(), strMsg);
+			
 			System.out.println("Player logged out: " + message.getClubID() + " " + message.getPlayerID());
+			club.removeFromQueue(player);
+			//this.server.closeSocket(player.getID());
+			
 		}
 	}
 	
