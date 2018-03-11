@@ -162,10 +162,6 @@ public class Controller {
 
 			RequestLogout msg = new RequestLogout(club.getClubID(), player.getID());
 			this.server.sendMessage(msg.getPlayerID(), msg);
-
-			if(!player.getCurrentMatch().hasEnded()){
-				club.freeCourt();
-			}
 		}
 	}
 	
