@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendTestMessage() throws IOException {
         // Send first message
-        Message test = new BadMessage(clubID, playerID);
+        Message test = new InitialMessage(clubID, playerID);
         os.writeObject(test);
         os.flush(); // Send off the data
     }
@@ -132,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
     public void processMessage(Message message){
         System.out.println("Message bounceback: " + message.getPlayerID());
 
-        if(message instanceof BadMessage){
+       // if(message instanceof BadMessage){
 
-        }
+        //}
 
 
     }
