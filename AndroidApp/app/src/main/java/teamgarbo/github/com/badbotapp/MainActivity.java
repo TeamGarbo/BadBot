@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     boolean loggedIn = false;
 
-
+    int court = -2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
         fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
         enabled(false);
-        updateCourtDetails(-1);
+        updateCourtDetails(-2);
     }
 
     private void changeFBT()
@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 TextView court_text = findViewById(R.id.txt_court);
                 if(courtNo == -1)
                     court_text.setText("In queue...");
+                else if (courtNo == -2)
+                    court_text.setText("Waiting...");
                 else
                     court_text.setText("Court " + courtNo);
             }
@@ -248,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         if(message instanceof GameStartMessage){
             //TODO create intent with "i won/lost" buttons
             //TODO set textview thing to court number
-            int court = ((GameStartMessage) message).getCourtNumber();
+            court = ((GameStartMessage) message).getCourtNumber();
             updateCourtDetails(court);
             enabled(true);
         }
@@ -264,8 +266,12 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(new Intent(getBaseContext(), NewUserFormActivity.class), 444);
         }
 
-        if(message instanceof LogoutMessage){
-            logout();
+        if(message instanceof RequestLogout){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -287,12 +293,14 @@ public class MainActivity extends AppCompatActivity {
     public void logout() {
 
         try {
-            gameDNF(null);
+            if(court >= 0)
+                gameDNF(null);
             sendMessage(new LogoutMessage(clubID, playerID));
             loggedIn = false;
             changeFBT();
             updatePlayerDetails("Not logged in");
             enabled(false);
+            updateCourtDetails(-2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -355,11 +363,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadNewUser(View view)
-    {
-        Intent myIntent = new Intent(this, NewUserFormActivity.class);
-        this.startActivity(myIntent);
-    }
 
     @Override
     protected void onDestroy() {
