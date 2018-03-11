@@ -267,7 +267,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(message instanceof RequestLogout){
+            loggedIn = false;
+            changeFBT();
+            updatePlayerDetails("Not logged in");
+            enabled(false);
+            updateCourtDetails(-2);
             try {
+
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -296,11 +302,7 @@ public class MainActivity extends AppCompatActivity {
             if(court >= 0)
                 gameDNF(null);
             sendMessage(new LogoutMessage(clubID, playerID));
-            loggedIn = false;
-            changeFBT();
-            updatePlayerDetails("Not logged in");
-            enabled(false);
-            updateCourtDetails(-2);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
