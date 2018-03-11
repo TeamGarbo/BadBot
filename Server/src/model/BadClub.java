@@ -2,7 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 public class BadClub implements Serializable{
 
@@ -82,16 +84,34 @@ public class BadClub implements Serializable{
 	}
 
 	public BadPlayer[] getTeam(int size){
-		BadPlayer[] players = new BadPlayer[size];
 		if(playerQueue.size() >= size) {
-			for(int i=0; i<players.length; i++) {
-				players[i] = playerQueue.pop();
+			BadPlayer[] players = new BadPlayer[size];
+			players[0] = playerQueue.pop();
+
+			PriorityQueue<BadPlayer> queue = new PriorityQueue<BadPlayer>(new Comparator<BadPlayer>() {
+				@Override
+				public int compare(BadPlayer o1, BadPlayer o2) {
+					if(Math.abs(o1.getElo()-players[0].getElo()) > Math.abs(o2.getElo() - players[0].getElo())){
+						return 1;
+					}else if(Math.abs(o1.getElo()-players[0].getElo()) < Math.abs(o2.getElo() - players[0].getElo())){
+						return -1;
+					}
+					return 0;
+				}
+			});
+
+			queue.addAll(playerQueue);
+
+			for(int i=1; i<players.length; i++) {
+				players[i] = queue.poll();
+				playerQueue.remove(players[i]);
 			}
+			return players;
 		}
 		else {
 			return null;
 		}
-		return players;
+
 	}
 	
 	public void removeFromQueue(BadPlayer player) {
