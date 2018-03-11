@@ -85,6 +85,16 @@ public class Controller {
 			StringMessage strMsg = new StringMessage(message.getClubID(), message.getPlayerID(), "Initial message received");
 			this.server.sendMessage(strMsg.getPlayerID(), strMsg);
 		}
+		else if(message instanceof CreatePlayerMessage){
+			BadClub club = clubs.get(message.getClubID());
+			BadPlayer player = new BadPlayer(((CreatePlayerMessage) message).getName(), message.getPlayerID());
+			player.setElo(((CreatePlayerMessage) message).getElo());
+			allPlayers.put(player.getID(), player);
+			club.addPlayer(player);
+			
+			StringMessage strMsg = new StringMessage(message.getClubID(), message.getPlayerID(), "New Message received");
+			this.server.sendMessage(strMsg.getPlayerID(), strMsg);
+		}
 		else if(message instanceof GameEndMessage) {
 			BadClub club = clubs.get(message.getClubID());
 			BadPlayer player = allPlayers.get(message.getPlayerID());
