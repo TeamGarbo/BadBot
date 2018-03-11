@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     ObjectInputStream is;
     boolean socketInitalised = false;
 
+    boolean loggedIn = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +46,20 @@ public class MainActivity extends AppCompatActivity {
         startSocket();
         initPlayerID();
         qrScan = new IntentIntegrator(this);
-        qrScan.initiateScan();
+        //qrScan.initiateScan();
         FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
         fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
+        if(loggedIn)
+            fbt.setImageDrawable(getResources().getDrawable(R.drawable.logout));
+        else
+            fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
+    }
 
     public void initSocket() throws IOException {
         //String ip = "10.9.133.81";
@@ -161,10 +171,26 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
+    public void logout()
+    {
+
+
+        try {
+
+
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void scanQRButton(View view){
         //initiating the qr code scan
-        qrScan.initiateScan();
+        if(loggedIn)
+            logout();
+        else
+            qrScan.initiateScan();
 
     }
 
@@ -189,6 +215,8 @@ public class MainActivity extends AppCompatActivity {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 // Vibrate for 500 milliseconds
                 v.vibrate(100);
+
+
             }
             else {
                 //if qr code is null
