@@ -91,9 +91,9 @@ public class BadClub implements Serializable{
 			PriorityQueue<BadPlayer> queue = new PriorityQueue<BadPlayer>(new Comparator<BadPlayer>() {
 				@Override
 				public int compare(BadPlayer o1, BadPlayer o2) {
-					if(Math.abs(o1.getElo()-players[0].getElo()) > Math.abs(o2.getElo() - players[0].getElo())){
+					if(Math.abs(o1.getElo()-players[0].getElo()) < Math.abs(o2.getElo() - players[0].getElo())){
 						return 1;
-					}else if(Math.abs(o1.getElo()-players[0].getElo()) < Math.abs(o2.getElo() - players[0].getElo())){
+					}else if(Math.abs(o1.getElo()-players[0].getElo()) > Math.abs(o2.getElo() - players[0].getElo())){
 						return -1;
 					}
 					return 0;
