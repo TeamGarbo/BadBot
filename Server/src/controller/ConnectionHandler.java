@@ -30,9 +30,11 @@ public class ConnectionHandler implements Runnable {
                 //Controller.getInstance().processMessage(message);
             }catch(ClassNotFoundException e){
             	runningFine = false;
+            	closeSocket();
             	e.printStackTrace();
             }catch(IOException e){
             	runningFine = false;
+            	closeSocket();
                 e.printStackTrace();
             }
         }
