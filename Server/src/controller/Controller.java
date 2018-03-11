@@ -66,6 +66,7 @@ public class Controller {
 			}
 			
 			BadPlayer getPlayer = allPlayers.get(message.getPlayerID());
+			System.out.println(getPlayer);
 			if(getPlayer==null) {
 				//TODO Create player properly
 				RequestPlayerMessage msg = new RequestPlayerMessage(message.getClubID(), message.getPlayerID());
