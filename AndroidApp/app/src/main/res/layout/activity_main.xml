@@ -67,27 +67,34 @@
 
                 <Button
                     android:id="@+id/game_won"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="gameWon"
                     android:text="won"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/colorGreen" />
 
                 <Button
                     android:id="@+id/game_lost"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="gameLost"
                     android:text="lost"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/colorRed"
+                    />
 
                 <Button
                     android:id="@+id/game_dnf"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="gameDNF"
                     android:text="Dnf"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                   />
 
             </LinearLayout>
 
