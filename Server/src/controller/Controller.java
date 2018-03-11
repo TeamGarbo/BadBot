@@ -3,17 +3,20 @@ package controller;
 import java.util.Date;
 import java.util.HashMap;
 import model.BadClub;
+import model.BadPlayer;
 import model.BadSession;
+import teamgarbo.github.com.badbotapp.message.BadMessage;
 import teamgarbo.github.com.badbotapp.message.Message;
 
 public class Controller {
 
 	HashMap<String, BadClub> clubs; //this is the current session
 	Server server;
+	HashMap<String, BadPlayer> allPlayers;
 	
 	private Controller() {
-		clubs = new HashMap<String, BadClub>();
-		
+		clubs = new HashMap<>();
+		allPlayers = new HashMap<>();
 	}
 	
 	private static Controller instance;
@@ -49,9 +52,19 @@ public class Controller {
 		
 	}
 
+
+	///TODO: add player registration (name)
 	public void processMessage(Message message) {
-		System.out.println(message.getClubID() + " " + message.getPlayerID());
-		
+		if(message instanceof BadMessage) {
+			BadClub club = clubs.get(message.getClubID());
+			BadPlayer getPlayer = allPlayers.get(message.getPlayerID();
+			if(getPlayer==null) {
+				club.addPlayer(new BadPlayer(message.getPlayerID(), ));
+			}else{
+				club.addPlayer(getPlayer);
+			}
+		}
+		System.out.println("hello");
 	}
 	
 	//only called when a new session is created
