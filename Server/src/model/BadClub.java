@@ -22,7 +22,18 @@ public class BadClub implements Serializable{
 	public ArrayList<BadPlayer> getPlayers() {
 		return players;
 	}
-	
+
+	public void freeCourt(){
+	    noCourtsUsed--;
+	    if(noCourtsUsed<0){
+	        noCourtsUsed = 0;
+        }
+    }
+
+    public void takeCourt(){
+	    noCourtsUsed++;
+    }
+
 	public int getLowestElo(){
 		int lowest = Integer.MAX_VALUE;
 		int highest = Integer.MIN_VALUE;
@@ -101,9 +112,11 @@ public class BadClub implements Serializable{
 	}
 
 	public BadPlayer[] getTeam(int size){
-		if(playerQueue.size() >= size) {
+		if(playerQueue.size() >= size && noCourtsUsed<noCourts) {
 			BadPlayer[] players = new BadPlayer[size];
 			players[0] = playerQueue.pop();
+
+			takeCourt();
 
 			PriorityQueue<BadPlayer> queue = new PriorityQueue<BadPlayer>(new Comparator<BadPlayer>() {
 				@Override

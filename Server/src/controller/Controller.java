@@ -2,10 +2,8 @@ package controller;
 
 import java.util.Date;
 import java.util.HashMap;
-import model.BadClub;
-import model.BadPlayer;
-import model.BadSession;
-import model.Properties;
+
+import model.*;
 import teamgarbo.github.com.badbotapp.message.*;
 
 public class Controller {
@@ -84,8 +82,10 @@ public class Controller {
 				BadPlayer[] nextPlayers = club.addToQueue(getPlayer);
 				if(nextPlayers!=null) {
 					fixedCourtNumber++;
+					Match match = new Match();
 					for (BadPlayer dude : nextPlayers) {
 						//TODO change court number
+						dude.setCurrentMatch(match);
 						GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber);
 						this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 					}
@@ -105,8 +105,10 @@ public class Controller {
 			BadPlayer[] nextPlayers = club.addToQueue(player);
 			if(nextPlayers!=null) {
 				fixedCourtNumber++;
+				Match match = new Match();
 				for (BadPlayer dude : nextPlayers) {
 					//TODO change court number
+					dude.setCurrentMatch(match);
 					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber);
 					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 				}
@@ -118,6 +120,11 @@ public class Controller {
 		else if(message instanceof GameEndMessage) {
 			BadClub club = clubs.get(message.getClubID());
 			BadPlayer player = allPlayers.get(message.getPlayerID());
+
+			if(!player.getCurrentMatch().hasEnded()){
+				player.getCurrentMatch().setMatchEnd();
+				clubs.get(message.getClubID()).freeCourt();
+			}
 			
 			switch(((GameEndMessage) message).result) {
 			case Properties.WIN: player.incrementWins();
@@ -132,8 +139,10 @@ public class Controller {
 			BadPlayer[] nextPlayers = club.addToQueue(player);
 			if(nextPlayers!=null) {
 				fixedCourtNumber++;
+				Match match = new Match();
 				for (BadPlayer dude : nextPlayers) {
 					//TODO change court number
+					dude.setCurrentMatch(match);
 					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber);
 					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 				}
