@@ -65,7 +65,7 @@ public class TestDatabaseHandler {
 		expectedPlayers.add(new BadPlayer("name1", "1"));
 		expectedPlayers.add(new BadPlayer("name2", "2"));
 		expectedPlayers.add(new BadPlayer("name3", "3"));
-		
+		/*
 		String expectedID = "1";
 		
 		BadClub expectedClub = new BadClub(expectedID);
@@ -77,6 +77,6 @@ public class TestDatabaseHandler {
 		BadClub currentClub = DatabaseHandler.getClubDatabase(expectedID);
 		
 		assertTrue(expectedClub.getClubID().equals(expectedID));
-				
+				*/
 	}
 }
