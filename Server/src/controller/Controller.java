@@ -50,7 +50,8 @@ public class Controller {
 	}
 
 	public void processMessage(Message message) {
-		System.out.println("hello");
+		System.out.println(message.getClubID() + " " + message.getPlayerID());
+		
 	}
 	
 	//only called when a new session is created
