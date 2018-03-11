@@ -76,6 +76,8 @@ public class Controller {
 				allPlayers.put(myPlayer.getID(), myPlayer);
 				club.addPlayer(myPlayer);*/
 			}else{
+				ExistingPlayerMessage msg = new ExistingPlayerMessage(message.getClubID(), message.getPlayerID(), getPlayer.getName());
+				this.server.sendMessage(msg.getPlayerID(), msg);
 				club.addPlayer(getPlayer);
 			}
 			System.out.println("Player Created: " + message.getClubID() + " " + message.getPlayerID());
@@ -114,8 +116,8 @@ public class Controller {
 			BadClub club = clubs.get(message.getClubID());
 			BadPlayer player = allPlayers.get(message.getPlayerID());
 			
-			StringMessage strMsg = new StringMessage(club.getClubID(), player.getID(), "Logout");
-			this.server.sendMessage(strMsg.getPlayerID(), strMsg);
+			RequestLogout msg = new RequestLogout(club.getClubID(), player.getID());
+			this.server.sendMessage(msg.getPlayerID(), msg);
 			
 			System.out.println("Player logged out: " + message.getClubID() + " " + message.getPlayerID());
 			club.removeFromQueue(player);
