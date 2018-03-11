@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 import teamgarbo.github.com.badbotapp.message.*;
+import teamgarbo.github.com.badbotapp.model.Properties;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         //qrScan.initiateScan();
         FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
         fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
+        enabled(false);
     }
 
     private void changeFBT()
@@ -90,6 +93,54 @@ public class MainActivity extends AppCompatActivity {
                 court_text.setText("Court " + courtNo);
             }
         });
+    }
+
+    public void enabled(final boolean e)
+    {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayout ll = findViewById(R.id.outcome_container);
+                if(e)
+                    ll.setVisibility(View.VISIBLE);
+                else
+                    ll.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void gameWon(View view)
+    {
+        try {
+            sendMessage(new GameEndMessage(clubID,playerID, Properties.WIN));
+            enabled(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void gameLost(View view)
+    {
+        try {
+            sendMessage(new GameEndMessage(clubID,playerID, Properties.LOSS));
+            enabled(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void gameDNF(View view)
+    {
+        try {
+            sendMessage(new GameEndMessage(clubID,playerID, Properties.DRAW));
+            enabled(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void test_button(View view)
+    {
+        updateCourtDetails(10);
     }
 
     @Override
@@ -191,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
             //TODO set textview thing to court number
             int court = ((GameStartMessage) message).getCourtNumber();
             updateCourtDetails(court);
+            enabled(true);
         }
 
     }
