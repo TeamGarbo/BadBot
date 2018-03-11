@@ -61,8 +61,8 @@ public class Controller {
 		if(message instanceof InitialMessage) {
 			BadClub club = clubs.get(message.getClubID());
 			if(club==null) {
-				club = new BadClub(message.getClubID());
-				clubs.put(club.getClubID(), club);
+				RequestLogout msg = new RequestLogout(message.getClubID(), message.getPlayerID());
+				this.server.sendMessage(msg.getPlayerID(), msg);
 			}
 			
 			BadPlayer getPlayer = allPlayers.get(message.getPlayerID());
@@ -78,7 +78,13 @@ public class Controller {
 			}else{
 				ExistingPlayerMessage msg = new ExistingPlayerMessage(message.getClubID(), message.getPlayerID(), getPlayer.getName());
 				this.server.sendMessage(msg.getPlayerID(), msg);
-				club.addPlayer(getPlayer);
+
+				BadPlayer[] nextPlayers = club.addToQueue(getPlayer);
+				for(BadPlayer dude: nextPlayers) {
+					//TODO change court number
+					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+				}
 			}
 			System.out.println("Player Created: " + message.getClubID() + " " + message.getPlayerID());
 			
@@ -90,7 +96,13 @@ public class Controller {
 			BadPlayer player = new BadPlayer(((CreatePlayerMessage) message).getName(), message.getPlayerID());
 			player.setElo(((CreatePlayerMessage) message).getElo());
 			allPlayers.put(player.getID(), player);
-			club.addPlayer(player);
+
+			BadPlayer[] nextPlayers = club.addToQueue(player);
+			for(BadPlayer dude: nextPlayers) {
+				//TODO change court number
+				GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+				this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+			}
 			
 			StringMessage strMsg = new StringMessage(message.getClubID(), message.getPlayerID(), "New Message received");
 			this.server.sendMessage(strMsg.getPlayerID(), strMsg);
@@ -109,9 +121,7 @@ public class Controller {
 			default: player.incrementDraws(); //if its none then just increment the draws
 				break;
 			}
-			club.addToQueue(player);
-			
-			BadPlayer[] nextPlayers = club.getTeam(4);
+			BadPlayer[] nextPlayers = club.addToQueue(player);
 			for(BadPlayer dude: nextPlayers) {
 				//TODO change court number 
 				GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
@@ -144,10 +154,9 @@ public class Controller {
 		//add players
 	}
 	
-	public void addClub(String id) {
-		BadClub club = new BadClub(id);
+	public void addClub(String id, int noCourts, int size) {
+		BadClub club = new BadClub(id, noCourts, size);
 		clubs.put(id, club);
-		
 	}
 	
 	public BadClub getClub(String clubID) {

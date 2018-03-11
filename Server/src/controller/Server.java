@@ -12,53 +12,53 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 public class Server {
 
     private ArrayList<Socket> connectedPlayers = new ArrayList<>();
 
     private HashMap<String, ConnectionHandler> userID_connection = new HashMap<>();
 
-    public Server(){
-    	new Thread()
-        {
+    public Server() {
+        new Thread() {
             public void run() {
-            	init();
+                init();
             }
         }.start();
     }
-    
+
     public void init() {
-        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()*2);
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(4444);
             System.out.println("Server: started!");
 
-            while(true) {
+            while (true) {
                 Socket client = serverSocket.accept();
                 connectedPlayers.add(client);
-                executorService.execute(new ConnectionHandler(client,this));
+                executorService.execute(new ConnectionHandler(client, this));
             }
 
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    public void passMessage(Message message, ConnectionHandler handler){
-        if(message instanceof InitialMessage) {
-            userID_connection.put(message.getPlayerID(), handler);    
+
+    public void passMessage(Message message, ConnectionHandler handler) {
+        if (message instanceof InitialMessage) {
+            userID_connection.put(message.getPlayerID(), handler);
         }
-        
+
         Controller.getInstance().processMessage(message);
     }
 
-    public void sendMessage(String userID, Message message){
+    public void sendMessage(String userID, Message message) {
         userID_connection.get(userID).sendMessage(message);
     }
-    
+
     public void closeSocket(String userID) {
-    	System.out.println("Server closing socket for " + userID);
-    	userID_connection.get(userID).closeSocket();
+        System.out.println("Server closing socket for " + userID);
+        userID_connection.get(userID).closeSocket();
     }
 }
