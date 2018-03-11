@@ -150,8 +150,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initSocket() throws IOException {
-        //String ip = "10.9.133.81";
-        String ip = "46.101.53.119";
+        String ip = "10.9.133.81";
+        //String ip = "46.101.53.119";
         InetAddress adr = InetAddress.getByName(ip);
 
         socket = new Socket(adr, 4444);
