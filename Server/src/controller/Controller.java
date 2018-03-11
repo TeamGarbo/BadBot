@@ -66,7 +66,9 @@ public class Controller {
 			
 			BadPlayer getPlayer = allPlayers.get(message.getPlayerID());
 			if(getPlayer==null) {
-				club.addPlayer(new BadPlayer("Guest", message.getPlayerID()));
+				BadPlayer myPlayer = new BadPlayer("Guest", message.getPlayerID());
+				allPlayers.put(myPlayer.getID(), myPlayer);
+				club.addPlayer(myPlayer);
 			}else{
 				club.addPlayer(getPlayer);
 			}

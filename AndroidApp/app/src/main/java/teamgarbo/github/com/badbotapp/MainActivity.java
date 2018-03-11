@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -39,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //getActionBar().setTitle(R.string.app_name);
+        startSocket();
+        initPlayerID();
         qrScan = new IntentIntegrator(this);
         qrScan.initiateScan();
-        initPlayerID();
-        startSocket();
     }
 
     public void initSocket() throws IOException {
@@ -71,9 +72,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendTestMessage() throws IOException {
         // Send first message
-        Message test = new InitialMessage(clubID, playerID);
+        Message test = new BadMessage(clubID, playerID);
         os.writeObject(test);
         os.flush(); // Send off the data
+    }
+
+    public void sendMessage(final Message message) throws IOException {
+        new Thread()
+        {
+            public void run() {
+                try {
+                    if(!socketInitalised) initSocket();
+                    System.out.println(message.getPlayerID());
+                    os.writeObject(message);
+                    os.flush(); // Send off the data
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public void startSocket(){
@@ -150,7 +167,18 @@ public class MainActivity extends AppCompatActivity {
             if (result.getContents() != null) {
                 //If qr code has data, set clubid as qrcode
                 clubID = result.getContents();
+
+                try {
+
+                    sendMessage(new InitialMessage(clubID, playerID));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(clubID);
+
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                // Vibrate for 500 milliseconds
+                v.vibrate(100);
             }
             else {
                 //if qr code is null
