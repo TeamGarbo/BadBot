@@ -83,9 +83,10 @@ public class Controller {
 
 				BadPlayer[] nextPlayers = club.addToQueue(getPlayer);
 				if(nextPlayers!=null) {
+					fixedCourtNumber++;
 					for (BadPlayer dude : nextPlayers) {
 						//TODO change court number
-						GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber++);
+						GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber);
 						this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 					}
 				}
@@ -103,9 +104,10 @@ public class Controller {
 
 			BadPlayer[] nextPlayers = club.addToQueue(player);
 			if(nextPlayers!=null) {
+				fixedCourtNumber++;
 				for (BadPlayer dude : nextPlayers) {
 					//TODO change court number
-					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber++);
+					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber);
 					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 				}
 			}
@@ -129,9 +131,10 @@ public class Controller {
 			}
 			BadPlayer[] nextPlayers = club.addToQueue(player);
 			if(nextPlayers!=null) {
+				fixedCourtNumber++;
 				for (BadPlayer dude : nextPlayers) {
 					//TODO change court number
-					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber++);
+					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), fixedCourtNumber);
 					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 				}
 			}
