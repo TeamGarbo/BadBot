@@ -13,6 +13,10 @@ public class BadClub implements Serializable{
 	ArrayList<BadSession> pastSessions = new ArrayList<>();
 	ArrayList<BadPlayer> players = new ArrayList<>();
 	LinkedList<BadPlayer> playerQueue = new LinkedList<>();
+	//Each court along with what players it has, check against to see if need to decrement
+	int noCourts;
+	int courtSize;
+	int noCourtsUsed = 0;
 		
 	public ArrayList<BadPlayer> getPlayers() {
 		return players;
@@ -33,6 +37,10 @@ public class BadClub implements Serializable{
 		return lowest;
 	}
 
+	public int getNoCourts(){
+	    return noCourts;
+    }
+
 	public int getHighestElo(){
 		int highest = Integer.MIN_VALUE;
 		for(BadPlayer player : players){
@@ -48,14 +56,18 @@ public class BadClub implements Serializable{
 	{
 		players.add(player);
 		playerQueue.add(player);
+
+
 	}
 	
 	public void addPlayers(ArrayList<BadPlayer> players) {
 		this.players.addAll(players);
 	}
 
-	public BadClub(String id) {
+	public BadClub(String id, int noCourts, int courtSize) {
 		this.clubID = id;
+		this.noCourts = noCourts;
+		this.courtSize = courtSize;
 	}
 
 	public BadSession getSession() {
@@ -118,7 +130,8 @@ public class BadClub implements Serializable{
 		playerQueue.remove(player);
 	}
 	
-	public void addToQueue(BadPlayer player) {
+	public BadPlayer[] addToQueue(BadPlayer player) {
 		playerQueue.add(player);
+        return getTeam(this.courtSize);
 	}
 }
