@@ -281,11 +281,12 @@ public class MainActivity extends AppCompatActivity {
     public void logout() {
 
         try {
+            gameDNF(null);
             sendMessage(new LogoutMessage(clubID, playerID));
             loggedIn = false;
             changeFBT();
             updatePlayerDetails("Not logged in");
-
+            enabled(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
