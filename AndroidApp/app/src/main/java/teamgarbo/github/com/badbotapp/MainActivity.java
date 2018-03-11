@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         initPlayerID();
         qrScan = new IntentIntegrator(this);
         qrScan.initiateScan();
+        FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
+        fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
     }
 
             
@@ -196,5 +199,16 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent myIntent = new Intent(this, NewUserFormActivity.class);
         this.startActivity(myIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        super.onDestroy();
     }
 }
