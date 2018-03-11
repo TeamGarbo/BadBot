@@ -75,7 +75,7 @@ public class Controller {
 			}else{
 				club.addPlayer(getPlayer);
 			}
-			System.out.println(message.getClubID() + " " + message.getPlayerID());
+			System.out.println("Player Created: " + message.getClubID() + " " + message.getPlayerID());
 			
 			this.server.sendMessage(message.getPlayerID(), message);
 		}
@@ -101,6 +101,8 @@ public class Controller {
 				GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
 				this.server.sendMessage(newMessage.getPlayerID(), newMessage);
 			}
+			
+			System.out.println("Player ended game: " + message.getClubID() + " " + message.getPlayerID());
 		}
 		else if(message instanceof LogoutMessage) {
 			BadClub club = clubs.get(message.getClubID());
@@ -108,6 +110,7 @@ public class Controller {
 			
 			club.removeFromQueue(player);
 			this.server.closeSocket(player.getID());
+			System.out.println("Player logged out: " + message.getClubID() + " " + message.getPlayerID());
 		}
 	}
 	
