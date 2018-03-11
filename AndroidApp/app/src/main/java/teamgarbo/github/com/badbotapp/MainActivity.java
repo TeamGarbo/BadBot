@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         qrScan.initiateScan();
     }
 
-            
+
 
     public void initSocket() throws IOException {
         //String ip = "10.9.133.81";
