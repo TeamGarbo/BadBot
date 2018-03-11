@@ -40,11 +40,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //getActionBar().setTitle(R.string.app_name);
         qrScan = new IntentIntegrator(this);
+        qrScan.initiateScan();
         initPlayerID();
         startSocket();
     }
-
-
 
     public void initSocket() throws IOException {
         String ip = "10.9.133.81";
@@ -111,7 +110,13 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO: process message based on type
     public void processMessage(Message message){
-        System.out.println("Message bounceback: " + message.getClubID());
+        System.out.println("Message bounceback: " + message.getPlayerID());
+
+        if(message instanceof BadMessage){
+
+        }
+
+
     }
 
     public void buttonClick(View view){

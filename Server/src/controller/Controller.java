@@ -74,7 +74,6 @@ public class Controller {
 			
 			this.server.sendMessage(message.getPlayerID(), message);
 		}
-		System.out.println("hello");
 	}
 	
 	//only called when a new session is created
