@@ -250,6 +250,8 @@ public class MainActivity extends AppCompatActivity {
         if(message instanceof ExistingPlayerMessage){
             playerName = ((ExistingPlayerMessage) message).getName();
             updatePlayerDetails(playerName);
+            loggedIn = true;
+            changeFBT();
         }
 
         if(message instanceof RequestPlayerMessage){
@@ -335,8 +337,7 @@ public class MainActivity extends AppCompatActivity {
                 // Vibrate for 500 milliseconds
                 v.vibrate(100);
 
-                loggedIn = true;
-                changeFBT();
+
             }
             else {
                 //if qr code is null
