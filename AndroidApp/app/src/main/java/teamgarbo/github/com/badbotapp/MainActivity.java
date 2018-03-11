@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
         fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
         enabled(false);
-        updateCourtDetails(0);
+        updateCourtDetails(-1);
     }
 
     private void changeFBT()
@@ -93,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 TextView court_text = findViewById(R.id.txt_court);
-                court_text.setText("Court " + courtNo);
+                if(courtNo == -1)
+                    court_text.setText("In queue...");
+                else
+                    court_text.setText("Court " + courtNo);
             }
         });
     }
@@ -107,7 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 if(e)
                     ll.setVisibility(View.VISIBLE);
                 else
+                {
                     ll.setVisibility(View.GONE);
+                    updateCourtDetails(-1);
+                }
             }
         });
     }
