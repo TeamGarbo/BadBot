@@ -58,6 +58,7 @@ public class Server {
     }
     
     public void closeSocket(String userID) {
+    	System.out.println("Server closing socket for " + userID);
     	userID_connection.get(userID).closeSocket();
     }
 }
