@@ -250,6 +250,11 @@ public class MainActivity extends AppCompatActivity {
             playerID = ((StringMessage) message).getPlayerID();
             updatePlayerDetails();
         }
+
+        if(message instanceof StringMessage){
+            if(((StringMessage) message).getString().equals("Logout"))
+                logout();
+        }
     }
 
     public void buttonClick(View view){
@@ -270,10 +275,10 @@ public class MainActivity extends AppCompatActivity {
     public void logout() {
 
         try {
-            //sendMessage(new LogoutMessage(clubID, playerID));
+            sendMessage(new LogoutMessage(clubID, playerID));
             loggedIn = false;
             changeFBT();
-            socket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
