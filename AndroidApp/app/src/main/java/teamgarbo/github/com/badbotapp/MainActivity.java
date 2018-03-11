@@ -245,6 +245,11 @@ public class MainActivity extends AppCompatActivity {
             enabled(true);
         }
 
+        if(message instanceof StringMessage){
+            Toast.makeText(this,((StringMessage) message).getString(), Toast.LENGTH_SHORT);
+            playerID = ((StringMessage) message).getPlayerID();
+            updatePlayerDetails();
+        }
     }
 
     public void buttonClick(View view){
