@@ -14,6 +14,7 @@ public class BadClub implements Serializable{
 	ArrayList<BadPlayer> players = new ArrayList<>();
 	LinkedList<BadPlayer> playerQueue = new LinkedList<>();
 	//Each court along with what players it has, check against to see if need to decrement
+	//Array of size number of courts
 	int noCourts;
 	int courtSize;
 	int noCourtsUsed = 0;
@@ -68,6 +69,10 @@ public class BadClub implements Serializable{
 		this.clubID = id;
 		this.noCourts = noCourts;
 		this.courtSize = courtSize;
+	}
+
+	public int getCourtSize() {
+		return courtSize;
 	}
 
 	public BadSession getSession() {

@@ -80,10 +80,12 @@ public class Controller {
 				this.server.sendMessage(msg.getPlayerID(), msg);
 
 				BadPlayer[] nextPlayers = club.addToQueue(getPlayer);
-				for(BadPlayer dude: nextPlayers) {
-					//TODO change court number
-					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
-					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+				if(nextPlayers!=null) {
+					for (BadPlayer dude : nextPlayers) {
+						//TODO change court number
+						GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+						this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+					}
 				}
 			}
 			System.out.println("Player Created: " + message.getClubID() + " " + message.getPlayerID());
@@ -98,10 +100,12 @@ public class Controller {
 			allPlayers.put(player.getID(), player);
 
 			BadPlayer[] nextPlayers = club.addToQueue(player);
-			for(BadPlayer dude: nextPlayers) {
-				//TODO change court number
-				GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
-				this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+			if(nextPlayers!=null) {
+				for (BadPlayer dude : nextPlayers) {
+					//TODO change court number
+					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+				}
 			}
 			
 			ExistingPlayerMessage msg = new ExistingPlayerMessage(message.getClubID(), message.getPlayerID(), ((CreatePlayerMessage) message).getName());
@@ -122,10 +126,12 @@ public class Controller {
 				break;
 			}
 			BadPlayer[] nextPlayers = club.addToQueue(player);
-			for(BadPlayer dude: nextPlayers) {
-				//TODO change court number 
-				GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
-				this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+			if(nextPlayers!=null) {
+				for (BadPlayer dude : nextPlayers) {
+					//TODO change court number
+					GameStartMessage newMessage = new GameStartMessage(club.getClubID(), dude.getID(), 4);
+					this.server.sendMessage(newMessage.getPlayerID(), newMessage);
+				}
 			}
 			
 			System.out.println("Player ended game: " + message.getClubID() + " " + message.getPlayerID());
