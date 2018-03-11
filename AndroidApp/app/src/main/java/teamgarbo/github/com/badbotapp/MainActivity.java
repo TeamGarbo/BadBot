@@ -3,26 +3,17 @@ package teamgarbo.github.com.badbotapp;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -30,6 +21,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 import teamgarbo.github.com.badbotapp.message.BadMessage;
+import teamgarbo.github.com.badbotapp.message.InitialMessage;
+import teamgarbo.github.com.badbotapp.message.Message;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendTestMessage() throws IOException {
         // Send first message
-        BadMessage test = new BadMessage(clubID, playerID);
+        Message test = new InitialMessage(clubID, playerID);
         os.writeObject(test);
         os.flush(); // Send off the data
     }
