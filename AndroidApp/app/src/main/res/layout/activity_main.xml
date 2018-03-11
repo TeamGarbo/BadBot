@@ -57,6 +57,15 @@
                 tools:layout_editor_absoluteX="162dp"
                 tools:layout_editor_absoluteY="307dp" />
 
+            <Button
+                android:id="@+id/game_finished"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                android:textAlignment="center"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="50dp"/>
+
         </LinearLayout>
     </FrameLayout>
 

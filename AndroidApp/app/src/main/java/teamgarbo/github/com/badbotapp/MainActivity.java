@@ -56,23 +56,40 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeFBT()
     {
-        FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
-        if(loggedIn)
-            fbt.setImageDrawable(getResources().getDrawable(R.drawable.logout));
-        else
-            fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                FloatingActionButton fbt = findViewById(R.id.floatingQRButton);
+                if(loggedIn)
+                    fbt.setImageDrawable(getResources().getDrawable(R.drawable.logout));
+                else
+                    fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
+            }
+        });
+
     }
 
-    private void updatePlayerDetails(String name)
+    private void updatePlayerDetails()
     {
-        TextView name_text = (TextView) findViewById(R.id.txt_Player);
-        name_text.setText(name);
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView name_text = findViewById(R.id.txt_Player);
+                name_text.setText(playerID);
+            }
+        });
+
     }
 
-    private void updateCourtDetails(int courtNo)
+    private void updateCourtDetails(final int courtNo)
     {
-        TextView court_text = (TextView) findViewById(R.id.txt_court);
-        court_text.setText("Court " + courtNo);
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView court_text = findViewById(R.id.txt_court);
+                court_text.setText("Court " + courtNo);
+            }
+        });
     }
 
     @Override
@@ -104,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         playerID = tm.getDeviceId();
+        updatePlayerDetails();
     }
 
     public void sendTestMessage() throws IOException {
@@ -172,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
             //TODO create intent with "i won/lost" buttons
             //TODO set textview thing to court number
             int court = ((GameStartMessage) message).getCourtNumber();
+            updateCourtDetails(court);
         }
 
     }
@@ -191,12 +210,10 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-    public void logout()
-    {
-
+    public void logout() {
 
         try {
-
+            //sendMessage(new LogoutMessage(clubID, playerID));
             loggedIn = false;
             changeFBT();
             socket.close();
