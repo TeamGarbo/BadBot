@@ -56,4 +56,8 @@ public class Server {
     public void sendMessage(String userID, Message message){
         userID_connection.get(userID).sendMessage(message);
     }
+    
+    public void closeSocket(String userID) {
+    	userID_connection.get(userID).closeSocket();
+    }
 }
