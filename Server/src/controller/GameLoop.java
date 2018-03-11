@@ -13,6 +13,10 @@ public class GameLoop implements Runnable{
 
 	public void run() {
 		while(true) {
+			int binStart = club.getLowestElo();
+			int binEnd = club.getHighestElo();
+			int binSize = (binEnd-binStart)/5;
+
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {

@@ -9,8 +9,10 @@ public class ConnectionHandler implements Runnable {
     Socket socket;
     ObjectOutputStream outputStream;
     ObjectInputStream inputStream;
-    public ConnectionHandler(Socket socket){
+    Server server;
+    public ConnectionHandler(Socket socket, Server server){
         this.socket = socket;
+        this.server = server;
         try {
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
@@ -24,7 +26,8 @@ public class ConnectionHandler implements Runnable {
         while(runningFine) {
             try {
                 Message message =(Message)inputStream.readObject();
-                Controller.getInstance().processMessage(message);
+                server.passMessage(message);
+                //Controller.getInstance().processMessage(message);
             }catch(ClassNotFoundException e){
             	runningFine = false;
             	closeSocket();
