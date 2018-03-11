@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
     }
 
-            
+
 
     public void initSocket() throws IOException {
         //String ip = "10.9.133.81";
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendTestMessage() throws IOException {
         // Send first message
-        Message test = new BadMessage(clubID, playerID);
+        Message test = new InitialMessage(clubID, playerID);
         os.writeObject(test);
         os.flush(); // Send off the data
     }
@@ -135,10 +135,14 @@ public class MainActivity extends AppCompatActivity {
     public void processMessage(Message message){
         System.out.println("Message bounceback: " + message.getPlayerID());
 
-        if(message instanceof BadMessage){
+       // if(message instanceof BadMessage){
 
+        //}
+        if(message instanceof GameStartMessage){
+            //TODO create intent with "i won/lost" buttons
+            //TODO set textview thing to court number
+            int court = ((GameStartMessage) message).getCourtNumber();
         }
-
 
     }
 

@@ -46,6 +46,7 @@ public class BadPlayer implements Serializable{
 	
 	public void incrementWins() {
 		wins++;
+		elo++;
 	}
 	
 	public int getLosses() {
@@ -54,6 +55,7 @@ public class BadPlayer implements Serializable{
 	
 	public void incrementLosses() {
 		losses++;
+		elo--;
 	}
 	
 	public int getDraws() {
