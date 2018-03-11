@@ -26,7 +26,7 @@ public class ConnectionHandler implements Runnable {
         while(runningFine) {
             try {
                 Message message =(Message)inputStream.readObject();
-                server.passMessage(message);
+                server.passMessage(message, this);
                 //Controller.getInstance().processMessage(message);
             }catch(ClassNotFoundException e){
             	runningFine = false;

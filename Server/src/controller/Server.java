@@ -2,8 +2,10 @@ package controller;
 
 import controller.ConnectionHandler;
 import teamgarbo.github.com.badbotapp.message.BadMessage;
+import teamgarbo.github.com.badbotapp.message.InitialMessage;
 import teamgarbo.github.com.badbotapp.message.Message;
 
+import javax.naming.ldap.Control;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -39,6 +41,8 @@ public class Server {
     public void passMessage(Message message, ConnectionHandler handler){
         if(message instanceof InitialMessage) {
             userID_connection.put(message.getPlayerID(), handler);
+        }else{
+            Controller.getInstance().processMessage(message);
         }
     }
 
