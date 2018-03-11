@@ -12,6 +12,8 @@ public class BadSession implements Serializable{
 	ArrayList<BadMatch> pastMatches;
 	HashMap<Integer, BadMatch> currentMatches;
 	Date date;
+
+	private Match currentMatch = null;
 	
 	
 	 

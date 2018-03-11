@@ -9,11 +9,18 @@ public class BadPlayer implements Serializable{
 	int losses = 0;
 	int draws = 0;
 	BadMatch lastMatch = null;
+	Match currentMatch = null;
 	String ID;
 	int elo = -1; //this is the rank of the player
-	
-	
-	
+
+	public void setCurrentMatch(Match match){
+	    this.currentMatch = match;
+    }
+
+    public Match getCurrentMatch(){
+	    return currentMatch;
+    }
+
 	public BadPlayer(String name, String iD) {
 		this.name = name;
 		ID = iD;
