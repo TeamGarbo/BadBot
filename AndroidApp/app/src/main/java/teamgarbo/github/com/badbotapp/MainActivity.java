@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     boolean loggedIn = false;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +54,31 @@ public class MainActivity extends AppCompatActivity {
         fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void changeFBT()
+    {
         FloatingActionButton fbt = (FloatingActionButton) findViewById(R.id.floatingQRButton);
         if(loggedIn)
             fbt.setImageDrawable(getResources().getDrawable(R.drawable.logout));
         else
             fbt.setImageDrawable(getResources().getDrawable(R.drawable.qrcode));
+    }
+
+    private void updatePlayerDetails(String name)
+    {
+        TextView name_text = (TextView) findViewById(R.id.txt_Player);
+        name_text.setText(name);
+    }
+
+    private void updateCourtDetails(int courtNo)
+    {
+        TextView court_text = (TextView) findViewById(R.id.txt_court);
+        court_text.setText("Court " + courtNo);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        changeFBT();
     }
 
     public void initSocket() throws IOException {
@@ -177,7 +197,8 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
-
+            loggedIn = false;
+            changeFBT();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -216,7 +237,8 @@ public class MainActivity extends AppCompatActivity {
                 // Vibrate for 500 milliseconds
                 v.vibrate(100);
 
-
+                loggedIn = true;
+                changeFBT();
             }
             else {
                 //if qr code is null
