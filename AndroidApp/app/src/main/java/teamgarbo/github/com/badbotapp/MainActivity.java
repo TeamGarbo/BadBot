@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //getActionBar().setTitle(R.string.app_name);
-        startSocket();
+        //startSocket();
         initPlayerID();
         updatePlayerDetails("Not logged in");
         qrScan = new IntentIntegrator(this);
@@ -227,11 +227,9 @@ public class MainActivity extends AppCompatActivity {
         {
             public void run() {
                 try {
-                    if(socketInitalised)
-                        while(true){
+                        while(socketInitalised){
                            Message message = (Message) is.readObject();
                            processMessage(message);
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -273,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
             enabled(false);
             updateCourtDetails(-2);
             try {
-
+                socketInitalised = false;
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -343,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
                 clubID = result.getContents();
 
                 try {
-
+                    startSocket();
                     sendMessage(new InitialMessage(clubID, playerID));
                 } catch (IOException e) {
                     e.printStackTrace();
