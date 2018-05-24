@@ -1,0 +1,6 @@
+[submodule "BadBot-Server"]
+	path = BadBot-Server
+	url = https://github.com/TeamGarbo/BadBot-Server
+[submodule "BadBot-App"]
+	path = BadBot-App
+	url = https://github.com/TeamGarbo/BadBot-App
